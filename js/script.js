@@ -43,12 +43,32 @@ const EditForm = Vue.defineComponent({
         itemdata: {
             type: Array,
             required: true
+        },
+        index: {
+            type: Number,
+            default: 0
+        }
+    },
+    emits: ['formClosed'],
+    methods: {
+        closeForm() {
+            this.$emit('formClosed'); // Emitimos evento para cerrar el formulario
         }
     },
     template: `
         <div class="edit-form">
             <h3>Editar Película</h3>
-            
+            <form>
+                <div v-for="(dataItem, i) in itemdata" :key="i">
+                    <label :for="'input-' + index + '-' + dataItem.name">{{ dataItem.name }}</label>
+                    <input 
+                        :id="'input-' + index + '-' + dataItem.name" 
+                        v-model="dataItem.value" 
+                        class="form-control"
+                    />
+                </div>
+                <button type="button" class="btn btn-secondary mt-3" @click="closeForm">Cerrar</button>
+            </form>
         </div>
     `
 });
@@ -63,6 +83,16 @@ const ItemData = Vue.defineComponent({
         index: {
             type: Number,
             default: 0
+        }
+    },
+    data() {
+        return {
+            editFormVisible: false // Estado para mostrar/ocultar formulario de edición
+        };
+    },
+    methods: {
+        toggleEditFormVisibility() {
+            this.editFormVisible = !this.editFormVisible;
         }
     },
     template: `
@@ -83,7 +113,17 @@ const ItemData = Vue.defineComponent({
                     <a class="btn btn-primary col-4 mx-1" :href="item.href" target="_blank">Ver</a>
                     <button class="btn btn-primary col-4" @click="toggleEditFormVisibility">Editar</button>
                 </div>
-            </div>          
+            </div>
+
+            <!-- Bloque de edición -->
+            <div v-else>
+                <edit-form 
+                    :itemdata="item.data" 
+                    :index="index" 
+                    @formClosed="toggleEditFormVisibility"
+                ></edit-form>
+            </div>
+        </div>
     `
 });
 
