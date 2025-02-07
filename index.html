@@ -25,20 +25,9 @@
         </div>
         <div class="container mt-3">
             <div class="row">
-                <div class="card p-4 col-md-4 " v-for="item in collection.items" :key="item.id">
-                        <h5 class="card-title">Name</h5>
-                        <p class="card-description">{{ item.data.find(d => d.name === 'name').value }}</p>
-
-                        <h5 class="card-title">Description</h5>
-                        <p class="card-description">{{ item.data.find(d => d.name === 'description').value }}</p>
-
-                        <h5 class="card-title">Director</h5>
-                        <p class="card-titledescription">{{ item.data.find(d => d.name === 'director').value }}</p>
-                        
-                        <h5 class="card-title">Release date</h5>
-                        <p class="description">{{ item.data.find(d => d.name === 'datePublished').value }}</p>
-
-                        <a class="btn btn-primary col-4" :href="item.href">Ver</a>
+                <div class="p-4 col-md-4 " v-for="item in collection.items" :key="item.id">
+                        <item-data :item="item">
+                        </item-data>
                 </div>
             </div>
             

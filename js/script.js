@@ -37,34 +37,55 @@ const server_data = {
     }
 };
 
-// // Componente edit-form
-// const EditForm = defineComponent({
-//     template: `
-//         <div>
-//             <h2>Edit Form</h2>
-//             <!-- Aquí iría el formulario de edición -->
-//         </div>
-//     `
-// });
+// Componente edit-form
+const EditForm = Vue.defineComponent({
+    props: {
+        itemdata: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+        <div class="edit-form">
+            <h3>Editar Película</h3>
+            
+        </div>
+    `
+});
 
-// // Componente item-data
-// const ItemData = defineComponent({
-//     props: {
-//         item: {
-//             type: Object,
-//             required: true
-//         }
-//     },
-//     template: `
-//         <div>
-//             <h3>{{ item.data.find(d => d.name === 'name').value }}</h3>
-//             <p>{{ item.data.find(d => d.name === 'description').value }}</p>
-//             <p><strong>Director:</strong> {{ item.data.find(d => d.name === 'director').value }}</p>
-//             <p><strong>Release Date:</strong> {{ item.data.find(d => d.name === 'datePublished').value }}</p>
-//             <a :href="item.href" target="_blank">More Info</a>
-//         </div>
-//     `
-// });
+
+const ItemData = Vue.defineComponent({
+    props: {
+        item: {
+            type: Object,
+            required: true
+        },
+        index: {
+            type: Number,
+            default: 0
+        }
+    },
+    template: `
+         <div class="card p-3">
+            <div v-if="!editFormVisible">
+                <h3><strong>Película:</strong> {{ item.data.find(d => d.name === 'name').value }}</h3>
+                <div>
+                    <h3>Descripción:</h3>
+                    <p>{{ item.data.find(d => d.name === 'description').value }}</p>
+
+                    <h3>Director:</h3>
+                    <p>{{ item.data.find(d => d.name === 'director').value }}</p>
+
+                    <h3>Fecha de estreno:</h3>
+                    <p>{{ item.data.find(d => d.name === 'datePublished').value }}</p>
+                </div>
+                <div class="row">
+                    <a class="btn btn-primary col-4 mx-1" :href="item.href" target="_blank">Ver</a>
+                    <button class="btn btn-primary col-4" @click="toggleEditFormVisibility">Editar</button>
+                </div>
+            </div>          
+    `
+});
 
 // Crear la aplicación Vue
 const app = Vue.createApp({
@@ -74,8 +95,8 @@ const app = Vue.createApp({
 });
 
 // // Registrar los componentes globalmente
-// app.component('edit-form', EditForm);
-// app.component('item-data', ItemData);
+app.component('edit-form', EditForm);
+app.component('item-data', ItemData);
 
 // Montar la aplicación en el elemento con id 'app'
 app.mount('#app');
