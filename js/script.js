@@ -96,9 +96,10 @@ const ItemData = Vue.defineComponent({
         }
     },
     template: `
-         <div class="card p-3">
+         <div class="card p-3 h-100 m-2">
             <div v-if="!editFormVisible">
-                <h3><strong>Película:</strong> {{ item.data.find(d => d.name === 'name').value }}</h3>
+                <h3>Película: </h3>
+                <p>{{ item.data.find(d => d.name === 'name').value }}</p>
                 <div>
                     <h3>Descripción:</h3>
                     <p>{{ item.data.find(d => d.name === 'description').value }}</p>
@@ -111,7 +112,7 @@ const ItemData = Vue.defineComponent({
                 </div>
                 <div class="row">
                     <a class="btn btn-primary col-4 mx-1" :href="item.href" target="_blank">Ver</a>
-                    <button class="btn btn-primary col-4" @click="toggleEditFormVisibility">Editar</button>
+                    <button class="btn btn-secondary col-4" @click="toggleEditFormVisibility">Editar</button>
                 </div>
             </div>
 
